@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Employees List</h2>
+<br />
+<br />
+@Html.ActionLink("Add Employee","Create",null,new {@class= "btn btn-primary" })
+
+@using (Ajax.BeginForm("SearchForEmployee", "Employees", new AjaxOptions()
+{
+    UpdateTargetId = "SrchForEmp",
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace
+}, new { @class = "form-inline" }))
+{
+    <br />
+    <div class="form-group">
+        <label>
+            <input type="radio" id="FName" name="searchBy" checked onchange="fnameFilter()" value="FName" /> Search By First Name
+        </label>
+        <label>
+            <input type="radio" id="BDate" name="searchBy" onchange="bdateFilter()" value="BDate" /> Search By Birth Date
+        </label>
+    </div>
+        <br />
+        <br />
+        <div id="fnameDiv" class="form-group">
+        </div>
+        <div id="StartBDateDiv" class="form-group" style="position:relative">
+        </div>
+        <div id="EndBDateDiv" class="form-group" style="position:relative">
+        </div>
+
+        <button type="submit" class="btn btn-default">Search</button>
+        }
+
+        <div id="SrchForEmp">
+                @{
+                    Html.RenderAction("SearchForEmployee");
+                }
+            </div>
+<script>
+    function fnameFilter() {
+        $("#fnameDiv").append("<label id='FNameLbl' for='FirstName'>First Name</label>")
+        $("#fnameDiv").append("<input type='text' class='form-control' id='FirstName' name='firstName' placeholder='First Name'>");
+        $("#StartBDateDiv").children().remove();
+        $("#EndBDateDiv").children().remove();
+   }
+    function bdateFilter() {
+        $("#StartBDateDiv").append("<label id='BDateLbl' for='StartBirthDate'>Start Birth Date</label>");
+        $("#StartBDateDiv").append("<input type='text' class='form-control' id='StartBirthDate' name='startBirthDate' data-datepicker='true' placeholder='Start Birth Date'>");
+        $("#EndBDateDiv").append("<label for='EndBirthDate'>End Birth Date</label>");
+        $("#EndBDateDiv").append("<input type='text' class='form-control' id='EndBirthDate' name='endBirthDate' data-datepicker='true' placeholder='End Birth Date'>");
+        $("#fnameDiv").children().remove();
+        $('[data-datepicker=true]').datetimepicker({ format: 'DD-MMM-YYYY' });
+   }
+</script>

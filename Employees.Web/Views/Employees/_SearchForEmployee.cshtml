@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Employees.Domain.Employee>
+<br />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(emp => emp.FirstName)</th>
+                <th>@Html.DisplayNameFor(emp => emp.LastName)</th>
+                <th>@Html.DisplayNameFor(emp => emp.BirthDate)</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(emps => emp.FirstName)</td>
+                    <td>@Html.DisplayFor(emps => emp.LastName)</td>
+                    <td>@Html.DisplayFor(emps => emp.BirthDate)</td>
+                    <td>@Html.ActionLink("Edit","Edit",new {id=emp.Id })</td>
+                    <td>@Html.ActionLink("Delete", "Delete", new { id = emp.Id })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
